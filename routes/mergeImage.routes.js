@@ -1,18 +1,15 @@
 import { Router } from "express";
-// import images from "images";
 import multer from "multer";
-import path from "path";
-import fs from "fs";
 import sharp from "sharp";
-// import os from "os";
-// Custom
+import fs from "fs";
+// Custom Route
 const rtMergeImage = Router();
-
+// Multer file upload config
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: (req, file, cb)=> {
     cb(null, './upload/')
   },
-  filename: function (req, file, cb) {
+  filename: (req, file, cb)=> {
     cb(null, Date.now() + '.jpg') //Appending .jpg
   }
 })
@@ -20,18 +17,7 @@ const upload = multer({ storage: storage });
 /**
  * Merge images
  */
-rtMergeImage.get('/mergeImage', async (req, res)=> {
-  res.json('Hola');
-});
-
-
-rtMergeImage.get('/', function(req, res) {
-  res.send('<form method="post" enctype="multipart/form-data" action="/tipsyAPI/upload"><input type="file" name="photo" /><input type="submit" /></form>');
-});
-
-rtMergeImage.post('/upload', upload.single('photo'), async (req, res)=> {
-
-  console.log("file: ", req?.file);
+rtMergeImage.post('/mergeImg', upload.single('photo'), async (req, res)=> {
   if ( !(req?.file?.fieldname==='photo') ) {
     return res.status(400).send('No files were uploaded.');
   }
@@ -39,15 +25,14 @@ rtMergeImage.post('/upload', upload.single('photo'), async (req, res)=> {
   let tmp_path = req.file.path,
       og_path = './upload/uploaded'+Date.now() + '.jpg',
       base_path = './upload/base'+Date.now() + '.png',
-      out_path = './upload/'+Date.now() + '.jpg',
-      photo;
+      out_path = './upload/'+Date.now() + '.jpg';
 
-  await sharp('./img/hb4.png')
-    .resize(400, 800)
+  await sharp('./assets/img/frames/hb4.png')
+    .resize(800, 1600)
     .toFile(base_path);
 
   await sharp(tmp_path)
-    .resize(400, 800)
+    .resize(800, 1600)
     .toFile(og_path)
 
   const layers= [
@@ -58,23 +43,13 @@ rtMergeImage.post('/upload', upload.single('photo'), async (req, res)=> {
   await sharp(layers[0].input)
     .composite(layers)
     .toFile(out_path);
-  // photo = images(tmp_path);
-  // console.log(photo);
-  
-  // photo.size(800)
-  //     .draw(images('./img/hb4.png'), 800 - 421, photo.height() - 117)
-  //     .save(out_path, {
-  //     quality: 80
-  // });
 
-  fs.unlink(tmp_path, function(err) {
-    console.log('unlinking');
-    
-      if (err) throw err;
-      res.send('<a href="/" title="upload"><img src="/tipsyAPI/' + path.basename(out_path) + '" /></a>');
-  });
+  const b64= fs
+    .readFileSync(out_path)
+    .toString('base64');
+ 
+  res.status(200).json({b64})
 });
-
 
 
 export default rtMergeImage;
