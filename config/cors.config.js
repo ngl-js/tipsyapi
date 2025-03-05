@@ -2,7 +2,9 @@ const whitelist = [
   'http://localhost:3013',
   'http://localhost:5173',
   'https://localhost:4433',
-  'https://192.168.1.105:4433'
+  'https://192.168.1.105:4433',
+  'https://10.10.20.33:4433',
+  'https://10.10.20.33:3013',
 ]
 
 export const corsOptions = {

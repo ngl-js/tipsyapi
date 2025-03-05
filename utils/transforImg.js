@@ -11,7 +11,8 @@ export const mergePortrait= async (file_path) => {
     .resize(800, 1600)
     .toFile(frame_path);
 
-  await sharp(og_path)
+  await sharp(og_path, { failOnError: false })
+    .rotate()
     .resize(800, 1600)
     .toFile(og_resized_path)
 
