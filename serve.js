@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-import exhttps from 'https-localhost'
+// import exhttps from 'https-localhost'
 
 import cors from "cors";
 const __dirname = import.meta.dirname;
@@ -12,7 +12,7 @@ import rtGetAssets from './routes/getAssets.routes.js';
 
 
 const app= express();
-const server= exhttps();
+const server= express();
 const port= process.env.PORT || 3013;
 
 app.use( express.json() );
