@@ -5,7 +5,7 @@ import exhttps from 'https-localhost'
 import cors from "cors";
 const __dirname = import.meta.dirname;
 // cors
-import { corsOptions } from './config/cors.config.js';
+// import { corsOptions } from './config/cors.config.js';
 // Routes
 import rtMergeImage from './routes/mergeImage.routes.js';
 import rtGetAssets from './routes/getAssets.routes.js';

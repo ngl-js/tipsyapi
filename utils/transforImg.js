@@ -2,8 +2,8 @@ import sharp from "sharp";
 import fs from "fs";
 import { mergeVideo } from "./transforVideo.js";
 
-export const mergePortrait= async (file_path, type) => {
-  let frame_path = './assets/img/frames/happy2.png';
+export const mergePortrait= async (file_path, frame_file, type) => {
+  let frame_path = './assets/img/frames/'+frame_file;
   let out_path = './upload/'+Date.now() + '.jpg';
 
   const og_file= await sharp(file_path, { failOnError: false })
