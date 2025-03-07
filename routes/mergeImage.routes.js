@@ -12,16 +12,24 @@ rtMergeImage.post(
   '/mergeImg', 
   upload.single('photo'), 
   async (req, res)=> {
+    let type= 'video'
     // Validate file uploaded
     if ( !(req?.file?.fieldname==='photo') ) {
       return res.status(400).send('No files were uploaded.');
     }
 
-    console.log(req.body);
-    
-    const b64= await mergePortrait(req.file.path);
+    try {
+      console.log(req.body);
+      const generated= await mergePortrait(req.file.path, type);
+
+      console.log(Date.now() + ` ${type} created`);
+      res.status(200).json(generated)
+
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({error})
+    }
   
-    res.status(200).json({b64})
 });
 
 

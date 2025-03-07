@@ -1,44 +1,39 @@
 import sharp from "sharp";
 import fs from "fs";
+import { mergeVideo } from "./transforVideo.js";
 
-export const mergePortrait= async (file_path) => {
-  let og_path = file_path,
-      og_resized_path = './upload/uploaded'+Date.now() + '.jpg',
-      frame_path = './upload/base'+Date.now() + '.png',
-      out_path = './upload/'+Date.now() + '.jpg';
+export const mergePortrait= async (file_path, type) => {
+  let frame_path = './assets/img/frames/happy2.png';
+  let out_path = './upload/'+Date.now() + '.jpg';
 
-  await sharp('./assets/img/frames/happy4.png')
-    .resize(800, 1600)
-    .toFile(frame_path);
-
-  await sharp(og_path, { failOnError: false })
+  const og_file= await sharp(file_path, { failOnError: false })
     .rotate()
-    .resize(800, 1600)
-    .toFile(og_resized_path)
+    .resize(1400, 2200)
+    .toBuffer();
 
-  const layers= [
-    og_resized_path,
-    frame_path
-  ].map(file => ({ input: file }));
+  const frame= await sharp(frame_path)
+    .resize(1400, 2200)
+    .toBuffer();
     
-  await sharp(layers[0].input)
-    .composite(layers)
+  await sharp(og_file)
+    .resize({ fit: 'inside' })
+    .composite([{
+      input: frame,
+      blend: 'over'
+    }])
     .toFile(out_path);
 
-  const b64= fs
-    .readFileSync(out_path)
-    .toString('base64');
+  let resp;
+  if (type==='video') {
+    const streamUrl= await mergeVideo(out_path)
+    resp= { type, streamUrl }
+  } else {
+    const b64= fs.readFileSync(out_path).toString('base64');
+    resp= { type, b64 }
+  }
 
-  // Del generated files
-  const tmpFilesToDelete= [
-    og_path,
-    og_resized_path,
-    frame_path,
-    out_path
-  ];
-  tmpFilesToDelete.forEach(file_path => {
-    fs.unlinkSync(file_path)
-  })
+  fs.unlinkSync(file_path)
+  fs.unlinkSync(out_path)
 
-  return b64;
+  return resp;
 }
