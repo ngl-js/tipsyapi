@@ -1,6 +1,7 @@
 const whitelist = [
   'https://tipsy-rrdx.onrender.com',
-  'https://tipsyapi.onrender.com'
+  'https://tipsyapi.onrender.com',
+  'https://api.editframe.com'
 ]
 
 export const corsOptions = {
