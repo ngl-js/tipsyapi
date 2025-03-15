@@ -1,6 +1,6 @@
 const whitelist = [
-  'https://tipsy-rrdx.onrender.com',
-  'https://tipsyapi.onrender.com',
+  'https://tipsy-production.up.railway.app',
+  'https://tipsyapi-production.up.railway.app',
   'https://api.editframe.com'
 ]
 
