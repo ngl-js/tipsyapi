@@ -2,8 +2,8 @@ import sharp from "sharp";
 import fs from "fs";
 import { mergeVideo } from "./transforVideo.js";
 
-export const mergePortrait= async (file_path, frame_file, type) => {
-  let frame_path = './assets/img/frames/'+frame_file;
+export const mergePortrait= async (file_path, params, type) => {
+  let frame_path = './assets/img/frames/'+params.frame;
   let out_path = './upload/'+Date.now() + '.jpg';
 
   const og_file= await sharp(file_path, { failOnError: false })
@@ -25,7 +25,7 @@ export const mergePortrait= async (file_path, frame_file, type) => {
 
   let resp;
   if (type==='video') {
-    const streamUrl= await mergeVideo(out_path)
+    const streamUrl= await mergeVideo(out_path, params.audio)
     resp= { type, streamUrl }
   } else {
     const b64= fs.readFileSync(out_path).toString('base64');

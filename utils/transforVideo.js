@@ -1,8 +1,7 @@
 import { Editframe } from "@editframe/editframe-js";
 
-export const mergeVideo= async (file_path) => {
-  let audio_path = './assets/audio/lofi2.mp3';
-  // let audio_path = './assets/audio/lofi2.mp3';
+export const mergeVideo= async (file_path, audio_file) => {
+  let audio_path = './assets/audio/'+audio_file;
 
   const editframe = new Editframe({
     // clientId: process.env.EDITFRAMES_CLIENT,
@@ -14,7 +13,7 @@ export const mergeVideo= async (file_path) => {
       height: 1900,
       width: 1100,
     },
-    duration: 5
+    duration: 10
   })
   await composition.addImage(file_path, {
     size: { format: 'fit' },
