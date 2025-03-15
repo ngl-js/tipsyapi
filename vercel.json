@@ -5,7 +5,5 @@
       "src": "serve.js",
       "use": "@vercel/node"
     }
-  ],
-  "routes": "/(.*)",
-  "dest": "/"
+  ]
 }
