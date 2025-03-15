@@ -28,7 +28,7 @@ app.use(
 app.get('/', function(req, res) {
   res.status(404).json({error:'Not allowed'});
 });
-server.use('/tipsyAPI', cors(corsOptions),  app);
+server.use('/tipsyAPI', cors(),  app);
 
 const srv= server.listen(port, () => {
   console.log(`Listening on port ${port}`);
