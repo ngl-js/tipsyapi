@@ -30,6 +30,9 @@ app.get('/', function(req, res) {
 });
 server.use('/tipsyAPI', cors(corsOptions),  app);
 
-server.listen(port, () => {
+const srv= server.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+srv.keepAliveTimeout= 60 * 1000 * 5;
+srv.headersTimeout= 61 * 1000 * 5;
