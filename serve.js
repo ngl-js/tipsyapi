@@ -4,7 +4,7 @@ import express from 'express';
 
 import cors from "cors";
 const __dirname = import.meta.dirname;
-cors
+// cors
 import { corsOptions } from './config/cors.config.js';
 // Routes
 import rtMergeImage from './routes/mergeImage.routes.js';
