@@ -5,7 +5,7 @@ export const mergeVideo= async (file_path) => {
   // let audio_path = './assets/audio/lofi2.mp3';
 
   const editframe = new Editframe({
-    clientId: process.env.EDITFRAMES_CLIENT,
+    // clientId: process.env.EDITFRAMES_CLIENT,
     token: process.env.EDITFRAMES_TOKEN
   })
 
