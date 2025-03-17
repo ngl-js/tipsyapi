@@ -24,7 +24,7 @@ rtMergeImage.post(
         type='video' : type='img'; 
       const generated= await mergePortrait(
         req.file.path,
-        req.body.frame,
+        req.body,
         type
       );
 
