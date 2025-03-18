@@ -25,13 +25,16 @@ export const mergePortrait= async (file_path, params, type) => {
 
   let resp;
   if (type==='video') {
-    const streamUrl= await mergeVideo(out_path, params.audio)
-    resp= { type, streamUrl }
+    const video_path= await mergeVideo(out_path, params.audio)
+    const b64= fs.readFileSync(video_path).toString('base64');
+    resp= { type, b64 }
+    // Delete video
+    fs.unlinkSync(video_path)
   } else {
     const b64= fs.readFileSync(out_path).toString('base64');
     resp= { type, b64 }
   }
-
+  // Delete images
   fs.unlinkSync(file_path)
   fs.unlinkSync(out_path)
 

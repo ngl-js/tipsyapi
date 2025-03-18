@@ -1,28 +1,24 @@
-import { Editframe } from "@editframe/editframe-js";
+import Ffmpeg from "fluent-ffmpeg";
 
 export const mergeVideo= async (file_path, audio_file) => {
   let audio_path = './assets/audio/'+audio_file;
+  let out_path = './upload/'+Date.now() + '.mp4';
 
-  const editframe = new Editframe({
-    // clientId: process.env.EDITFRAMES_CLIENT,
-    token: process.env.EDITFRAMES_TOKEN
+  const makevideo= new Promise((resolve)=> {
+    let newMp4 = Ffmpeg();
+    newMp4
+      .input(file_path)
+      .addInput(audio_path)
+      .duration(15)
+      .save(out_path)
+      .on('error', (err, stdout, stderr) => {
+        console.log('An error occurred: ' + err.message, err, stderr);
+      })
+      .on('end', () => {
+        resolve(out_path);
+      });
   })
 
-  const composition = await editframe.videos.new({
-    dimensions: {
-      height: 1900,
-      width: 1100,
-    },
-    duration: 10
-  })
-  await composition.addImage(file_path, {
-    size: { format: 'fit' },
-  })
-  await composition.addAudio(audio_path)
-  const video = await composition.encodeSync();
-
-  if (video.isFailed)
-    throw new Error("Error al generar video");
-  
-  return video.downloadUrl;
+  const out_video= await makevideo.then(data=> (data));
+  return out_video;
 }
