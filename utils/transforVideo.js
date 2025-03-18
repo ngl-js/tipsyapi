@@ -9,8 +9,8 @@ export const mergeVideo= async (file_path, audio_file) => {
     newMp4
       .input(file_path)
       .addInput(audio_path)
-      .audioCodec('libmp3lame')
-      .withAudioQuality(0)
+      // .audioCodec('libmp3lame')
+      // .withAudioQuality(0)
       .size('50%')
       .duration(10)
       .save(out_path)
