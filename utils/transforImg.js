@@ -4,7 +4,7 @@ import { mergeVideo } from "./transforVideo.js";
 
 export const mergePortrait= async (file_path, params, type) => {
   let frame_path = './assets/img/frames/'+params.frame;
-  let out_path = './upload/'+Date.now() + '.jpg';
+  let out_path = './upload/'+Date.now() + '.webp';
 
   const og_file= await sharp(file_path, { failOnError: false })
     .rotate()
@@ -21,6 +21,8 @@ export const mergePortrait= async (file_path, params, type) => {
       input: frame,
       blend: 'over'
     }])
+    .sharpen()
+    .webp( { quality: 85 } )
     .toFile(out_path);
 
   let resp;

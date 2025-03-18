@@ -11,6 +11,7 @@ rtGetAssets.get('/getAssets', function(req, res) {
   const audios= fs.readdirSync('./assets/audio', {withFileTypes: true})
     .filter(item => !item.isDirectory())
     .map(item =>({name: item.name}))
+    .sort()
 
   res.json({ frames, audios });
 });
