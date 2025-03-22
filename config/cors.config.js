@@ -1,7 +1,6 @@
 const whitelist = [
   'https://tipsy-production.up.railway.app',
-  'https://tipsyapi-production.up.railway.app',
-  'https://api.editframe.com'
+  'https://tipsyapi-production.up.railway.app'
 ]
 
 export const corsOptions = {
