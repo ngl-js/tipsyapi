@@ -3,6 +3,11 @@ import fs from "fs";
 import { mergeVideo } from "./transforVideo.js";
 
 export const mergePortrait= async (file_path, params, type) => {
+  let star_path= null;
+
+  if (params?.star!='star0')
+    star_path = './assets/img/stars/'+ params.star + '-min.png';
+  
   let frame_path = './assets/img/frames/'+params.frame;
   let out_path = './upload/'+Date.now() + '.webp';
 
@@ -14,13 +19,35 @@ export const mergePortrait= async (file_path, params, type) => {
   const frame= await sharp(frame_path)
     .resize(1400, 2200)
     .toBuffer();
+
+  let composite= [{
+    input: frame,
+    blend: 'over'
+  }];
+
+  if (star_path!==null) {
+    composite.push({
+      input: {
+        create:{ 
+          width:400, 
+          height:100, 
+          background:'rgb(0, 0, 0, 0.5)',
+          channels:4
+        }
+      },
+      blend: 'over',
+      gravity: 'southwest'
+    },
+    {
+      input: star_path,
+      blend: 'over',
+      gravity: 'southwest'
+    })
+  }
     
   await sharp(og_file)
     .resize({ fit: 'inside' })
-    .composite([{
-      input: frame,
-      blend: 'over'
-    }])
+    .composite(composite)
     .sharpen()
     .webp( { quality: 85 } )
     .toFile(out_path);
