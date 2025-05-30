@@ -8,7 +8,13 @@ export const mergePortrait= async (file_path, params, type) => {
   if (params?.star!='star0')
     star_path = './assets/img/stars/'+ params.star + '-min.png';
   
-  let frame_path = './assets/img/frames/'+params.frame;
+  let frame_app_path;
+  !!params.appid
+    ? (frame_app_path = "./assets/img/event/frames/")
+    : (frame_app_path = "./assets/img/frames/");
+
+  let frame_path = frame_app_path + params.frame;
+  
   let out_path = './upload/'+Date.now() + '.webp';
 
   const og_file= await sharp(file_path, { failOnError: false })
