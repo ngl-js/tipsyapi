@@ -22,3 +22,8 @@
 # System Files
 .DS_Store
 Thumbs.db
+/upload/*.jpg
+/upload/*.webp
+/upload/*.jpeg
+/upload/*.png
+/upload/*.mp4
