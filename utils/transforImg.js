@@ -7,12 +7,12 @@ export const mergePortrait = async (file_path, params, type) => {
   let star_path = null;
 
   if (params?.star != "star0")
-    star_path = "./assets/img/stars/" + params.star + "-min.png";
+    star_path = `./assets/img/stars/${params.star}-min.png`;
 
   let frame_app_path;
   !!params.appid
-    ? (frame_app_path = "./assets/img/event/frames/")
-    : (frame_app_path = "./assets/img/frames/");
+    ? (frame_app_path = `./assets/img/frames/${params.appid}/`)
+    : (frame_app_path = "./assets/img/frames/standar/");
 
   let frame_path = frame_app_path + params.frame;
 
@@ -80,4 +80,3 @@ export const mergePortrait = async (file_path, params, type) => {
 
   return resp;
 };
-
