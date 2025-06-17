@@ -65,12 +65,14 @@ export const mergePortrait = async (file_path, params, type) => {
   if (type === "video") {
     const video_path = await mergeVideo(out_path, params.audio);
     const b64 = fs.readFileSync(video_path).toString("base64");
-    if (!!params.appid) await send_img(video_path).then();
+    if (!!params.appid && params?.appid == "8rlthArOXi")
+      await send_img(video_path).then();
     resp = { type, b64 };
     // Delete video
     fs.unlinkSync(video_path);
   } else {
-    if (!!params.appid) await send_img(out_path).then();
+    if (!!params.appid && params?.appid == "8rlthArOXi")
+      await send_img(out_path).then();
     const b64 = fs.readFileSync(out_path).toString("base64");
     resp = { type, b64 };
   }
