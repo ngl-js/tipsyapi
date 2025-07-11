@@ -25,4 +25,20 @@ rtGetAssets.get("/getAssets/:id", function (req, res) {
   res.json({ frames, audios });
 });
 
+rtGetAssets.get("/getSurveys", function (req, res) {
+  const surveys = [
+    { appid: "", survey: "https://mxpqsr50oid.typeform.com/to/lTr4sbqV" },
+    {
+      appid: "8rlthArOXi",
+      survey: "https://mxpqsr50oid.typeform.com/to/lTr4sbqV",
+    },
+    { appid: "7h1pHUMlfe", survey: false },
+    {
+      appid: "yok5swuphU",
+      survey: "https://mxpqsr50oid.typeform.com/to/hUGtcqRz",
+    },
+  ];
+  res.json(surveys);
+});
+
 export default rtGetAssets;

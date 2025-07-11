@@ -1,6 +1,5 @@
 import "dotenv/config";
 import express from "express";
-// import exhttps from 'https-localhost'
 
 import cors from "cors";
 const __dirname = import.meta.dirname;
@@ -25,7 +24,7 @@ app.use(rtMergeImage, rtGetAssets, rtQRCode);
 app.get("/", function (req, res) {
   res.status(404).json({ error: "Not allowed" });
 });
-server.use("/tipsyAPI", cors(), app);
+server.use("/tipsyAPI", cors(corsOptions), app);
 
 const srv = server.listen(port, () => {
   console.log(`Listening on port ${port}`);
@@ -33,4 +32,3 @@ const srv = server.listen(port, () => {
 
 srv.keepAliveTimeout = 60 * 1000 * 5;
 srv.headersTimeout = 61 * 1000 * 5;
-
