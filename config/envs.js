@@ -8,8 +8,6 @@ export const envs = {
   MAIL_PASS: get("MAIL_PASS").required().asString(),
   MAIL_SERV: get("MAIL_SERV").required().asString(),
 
-  CORS_ORIGIN: get("CORS_ORIGIN").required().asString(),
-
   RECIPIENT_1: get("RECIPIENT_1").required().asString(),
   RECIPIENT_2: get("RECIPIENT_2").required().asString(),
 };
