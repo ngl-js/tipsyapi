@@ -3,7 +3,6 @@ import pkg from "env-var";
 const { get } = pkg;
 
 export const envs = {
-  PORT: get("PORT").required().asPortNumber(),
   MAIL_ACC: get("MAIL_ACC").required().asString(),
   MAIL_PASS: get("MAIL_PASS").required().asString(),
   MAIL_SERV: get("MAIL_SERV").required().asString(),
