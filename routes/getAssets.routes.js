@@ -13,7 +13,7 @@ rtGetAssets.get("/getAssets", function (req, res) {
 rtGetAssets.get("/getAssets/:id", function (req, res) {
   const idx = req.params.id;
 
-  const appids = ["8rlthArOXi", "7h1pHUMlfe", "yok5swuphU"];
+  const appids = ["8rlthArOXi", "7h1pHUMlfe", "yok5swuphU", "pRiBast5t2"];
   if (!(!!idx && appids.includes(idx))) {
     res.status(404).json({ error: "Assets not found" });
     return;
@@ -37,6 +37,7 @@ rtGetAssets.get("/getSurveys", function (req, res) {
       appid: "yok5swuphU",
       survey: "https://mxpqsr50oid.typeform.com/to/hUGtcqRz",
     },
+    { appid: "pRiBast5t2", survey: false },
   ];
   res.json(surveys);
 });

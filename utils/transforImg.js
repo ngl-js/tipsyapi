@@ -2,8 +2,10 @@ import sharp from "sharp";
 import fs from "fs";
 import { mergeVideo } from "./transforVideo.js";
 import { send_img } from "./mail.js";
+import { envs } from "../config/envs.js";
 
 export const mergePortrait = async (file_path, params, type) => {
+  console.log(params);
   let star_path = null;
 
   if (params?.star != "star0")
@@ -14,8 +16,6 @@ export const mergePortrait = async (file_path, params, type) => {
     ? (frame_app_path = `./assets/img/frames/${params.appid}/`)
     : (frame_app_path = "./assets/img/frames/standar/");
 
-  let frame_path = frame_app_path + params.frame;
-
   let out_path = "./upload/" + Date.now() + ".webp";
 
   const og_file = await sharp(file_path, { failOnError: false })
@@ -23,14 +23,19 @@ export const mergePortrait = async (file_path, params, type) => {
     .resize(1400, 2200)
     .toBuffer();
 
-  const frame = await sharp(frame_path).resize(1400, 2200).toBuffer();
+  let composite = [];
 
-  let composite = [
-    {
-      input: frame,
-      blend: "over",
-    },
-  ];
+  if (params.appid !== "pRiBast5t2") {
+    let frame_path = frame_app_path + params.frame;
+    const frame = await sharp(frame_path).resize(1400, 2200).toBuffer();
+
+    composite = [
+      {
+        input: frame,
+        blend: "over",
+      },
+    ];
+  }
 
   if (star_path !== null) {
     composite.push(
@@ -65,14 +70,20 @@ export const mergePortrait = async (file_path, params, type) => {
   if (type === "video") {
     const video_path = await mergeVideo(out_path, params.audio);
     const b64 = fs.readFileSync(video_path).toString("base64");
+
     if (!!params.appid && params?.appid == "8rlthArOXi")
-      await send_img(video_path).then();
+      await send_img(video_path, envs.RECIPIENT_1).then();
+
     resp = { type, b64 };
     // Delete video
     fs.unlinkSync(video_path);
   } else {
+    if (!!params.appid && params?.appid == "pRiBast5t2")
+      await send_img(out_path, envs.RECIPIENT_2).then();
+
     if (!!params.appid && params?.appid == "8rlthArOXi")
-      await send_img(out_path).then();
+      await send_img(out_path, envs.RECIPIENT_1).then();
+
     const b64 = fs.readFileSync(out_path).toString("base64");
     resp = { type, b64 };
   }

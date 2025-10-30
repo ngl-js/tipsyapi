@@ -1,33 +1,26 @@
 import nodemailer from "nodemailer";
+import { envs } from "../config/envs.js";
 
-export const send_img = async (file_path = "") => {
-  console.log(file_path);
+export const send_img = async (file_path = "", recipient) => {
   let _filename = file_path.split("/").pop();
   const transport = nodemailer.createTransport({
     port: 465,
-    service: "gmail",
+    service: envs.MAIL_SERV,
     secure: true,
     logger: true,
-    // debug: true,
     secureConnection: false,
-    // host: "smtp.gmail.com",
     auth: {
-      user: "apptipsy0@gmail.com",
-      pass: "tsyp essf hydz uvks",
-      // pass: "PhuTrup5+O",
+      user: envs.MAIL_ACC,
+      pass: envs.MAIL_PASS,
     },
-    // secure: false,
     tls: {
-      // ciphers: "SSLv3",
       rejectUnauthorized: true,
-      // minVersion: "TLSv1.2",
     },
-    // requireTLS: true,
   });
 
   const mailOptions = {
-    from: "apptipsy0@gmail.com", // sender address
-    to: "jackypeiro@gmail.com", // list of receivers
+    from: envs.MAIL_ACC, // sender address
+    to: recipient, // list of receivers
     subject: "Tipsy images",
     text: "Tipsy imagenes generated",
     attachments: [

@@ -9,10 +9,11 @@ import { corsOptions } from "./config/cors.config.js";
 import rtMergeImage from "./routes/mergeImage.routes.js";
 import rtGetAssets from "./routes/getAssets.routes.js";
 import rtQRCode from "./routes/qrcode.route.js";
+import { envs } from "./config/envs.js";
 
 const app = express();
 const server = express();
-const port = process.env.PORT || 3013;
+const port = envs.PORT || 3013;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
