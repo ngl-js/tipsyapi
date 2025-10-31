@@ -4,8 +4,8 @@ const { get } = pkg;
 
 export const envs = {
   MAIL_ACC: get("MAIL_ACC").required().asString(),
-  MAIL_PASS: get("MAIL_PASS").required().asString(),
-  MAIL_SERV: get("MAIL_SERV").required().asString(),
+  MAIL_PASS: get("MAIL_PASS").asString(),
+  MAIL_SERV: get("MAIL_SERV").asString(),
 
   CORS_ORIGINS: get("CORS_ORIGINS").required().asString(),
   CORS_METHODS: get("CORS_METHODS").required().asString(),

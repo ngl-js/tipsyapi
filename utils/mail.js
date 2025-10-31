@@ -9,16 +9,16 @@ export const send_img = async (file_path = "", recipient) => {
     let _filename = file_path.split("/").pop();
     const attachment = fs.readFileSync(file_path).toString("base64");
 
-    console.log("Sending email...");
     const data = await resend.emails.send({
       from: envs.MAIL_ACC,
       to: [recipient],
       subject: "Galeria Tipsy",
-      html: "<p>Imagen generada por Tipsy</p>",
+      html: '<p>Imagen generada por Tipsy </br></br> <img src="cid:tipsy-image"/> </p>',
       attachments: [
         {
           content: attachment,
           filename: _filename,
+          contentId: "tipsy-image",
         },
       ],
     });
